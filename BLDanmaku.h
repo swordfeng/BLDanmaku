@@ -11,7 +11,7 @@ class BLDanmaku : public QQuickPaintedItem
 {
 public:
     BLDanmaku(QQuickItem *parent = 0);
-    //void paint(QPainter *painter);
+    void paint(QPainter *painter);
     virtual ~BLDanmaku();
     ISprite *getSprite(const Comment &comment);
     QSize size() { return QSize(width(), height()); }

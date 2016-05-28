@@ -52,7 +52,6 @@ BLDanmaku::BLDanmaku(QQuickItem *parent):
 
 }
 
-/*
 void BLDanmaku::paint(QPainter *painter) {
     painter->setRenderHints(QPainter::SmoothPixmapTransform);
     static double time = 0;
@@ -60,7 +59,6 @@ void BLDanmaku::paint(QPainter *painter) {
     time += 0.02;
     danmaku->draw(painter, 0.02);
 }
-*/
 
 void BLDanmaku::update() {
     QQuickPaintedItem::update();
