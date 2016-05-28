@@ -30,6 +30,7 @@
 #include "BLDanmaku.h"
 #include <QQuickWindow>
 #include <algorithm>
+#include <iostream>
 
 #define qThreadPool QThreadPool::globalInstance()
 
@@ -610,8 +611,9 @@ namespace
 							const QRectF &from = locate[0];
 							double stp = locate[1].top() - from.top();
 							double len = from.height();
-							int sta = qMax(0, qFloor((stp > 0 ? (rect.top() - from.top()) : (rect.bottom() - from.bottom())) / stp));
-							int end = qMin(qCeil((rect.height() + len) / qAbs(stp) + sta), result.size());
+                            //int sta = qMax(0, qFloor((stp > 0 ? (rect.top() - from.top()) : (rect.bottom() - from.bottom())) / stp));
+                            //int end = qMin(qCeil((rect.height() + len) / qAbs(stp) + sta), result.size());
+                            int sta = 0, end = result.size();
 							for (; sta < end; ++sta){
 								graphic->currentRect() = locate[sta];
 								result[sta] += graphic->intersects(iter);
@@ -619,13 +621,15 @@ namespace
 						}
 					};
 					//获取读锁，计算现有弹幕的拥挤程度
-					danm->lock.lockForRead();
+                    danm->lock.lockForWrite();
 					quint64 last = danm->draw.isEmpty() ? 0 : danm->draw.last()->getIndex();
 					calculate(danm->draw);
-					danm->lock.unlock();
+                    for (int d: result) {
+                        std::cout << d << " ";
+                    }
+                    std::cout <<  std::endl;
 					ready.append(graphic);
 					//获取写锁，计算两次锁之间的新弹幕
-					danm->lock.lockForWrite();
 					QList<Graphic *> addtion;
 					QListIterator<Graphic *> iter(danm->draw);
 					iter.toBack();

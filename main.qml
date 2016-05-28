@@ -25,7 +25,7 @@ ApplicationWindow {
 
     BLDanmaku {
         id: danmaku
-        width: 320
+        width: 640
         height: 480
     }
 

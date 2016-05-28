@@ -61,7 +61,7 @@ void BLDanmaku::paint(QPainter *painter) {
     painter->setRenderHints(QPainter::SmoothPixmapTransform);
     static double time = 0;
     danmaku->setTime(time);
-    time += 0.02;
+    time += 20;
     danmaku->draw(painter, 0.02);
 }
 
