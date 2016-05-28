@@ -96,10 +96,8 @@ texture(0), item(item)
 SyncTextureSprite::~SyncTextureSprite()
 {
     qDebug() << "clear texture";
-    if (item->window()) { // help: will textures be released properly?
-        if (texture)
-            glFunctions->glDeleteTextures(1, &texture);
-    }
+    if (texture)
+        glFunctions->glDeleteTextures(1, &texture);
 	delete source;
 }
 

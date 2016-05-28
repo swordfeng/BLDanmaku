@@ -21,7 +21,7 @@ private:
     DanmakuModel *danmaku;
 
 public slots:
-    void clearup();
+    void cleanup();
 };
 
 #endif // BLDANMAKU_H

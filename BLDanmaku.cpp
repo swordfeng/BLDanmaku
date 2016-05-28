@@ -8,6 +8,11 @@ BLDanmaku::BLDanmaku(QQuickItem *parent):
     QQuickPaintedItem(parent) {
 
     setRenderTarget(QQuickPaintedItem::InvertedYFramebufferObject);
+    connect(this, &QQuickPaintedItem::windowChanged, [this](QQuickWindow *win){
+        if (win) {
+            connect(win, &QQuickWindow::sceneGraphInvalidated, this, &BLDanmaku::cleanup, Qt::DirectConnection);
+        }
+    });
 
     danmaku = new DanmakuModel(this);
 
@@ -64,7 +69,7 @@ void BLDanmaku::update() {
     QQuickPaintedItem::update();
 }
 
-void BLDanmaku::clearup() {
+void BLDanmaku::cleanup() {
     qDebug() << "GL destroy";
     delete danmaku;
     danmaku = nullptr;
