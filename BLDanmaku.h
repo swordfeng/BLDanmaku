@@ -9,6 +9,7 @@
 
 class BLDanmaku : public QQuickPaintedItem
 {
+    Q_OBJECT
 public:
     BLDanmaku(QQuickItem *parent = 0);
     void paint(QPainter *painter);
