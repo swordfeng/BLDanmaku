@@ -621,26 +621,32 @@ namespace
 						}
 					};
 					//获取读锁，计算现有弹幕的拥挤程度
-                    danm->lock.lockForWrite();
-					quint64 last = danm->draw.isEmpty() ? 0 : danm->draw.last()->getIndex();
+                    danm->lock.lockForRead();
+                    quint64 last = danm->draw.isEmpty() ? 0 : danm->draw.last()->getIndex() + 1;
+                    qDebug("last: %lld", last);
 					calculate(danm->draw);
-                    for (int d: result) {
-                        std::cout << d << " ";
-                    }
-                    std::cout <<  std::endl;
+                    danm->lock.unlock();
 					ready.append(graphic);
 					//获取写锁，计算两次锁之间的新弹幕
+                    danm->lock.lockForWrite();
+                    qDebug() << "lock";
 					QList<Graphic *> addtion;
 					QListIterator<Graphic *> iter(danm->draw);
 					iter.toBack();
 					while (iter.hasPrevious()){
 						Graphic *p = iter.previous();
-						if (p->getIndex() > last&&p->getMode() == comment->mode){
+                        qDebug("index: %lld", p->getIndex());
+                        if (p->getIndex() >= last&&p->getMode() == comment->mode){
 							addtion.prepend(p);
 						}
 						else break;
 					}
 					calculate(addtion);
+                    qDebug("output");
+                    for (int d: result) {
+                        std::cout << d << " ";
+                    }
+                    std::cout <<  std::endl;
 					//挑选最空闲的位置
 					int thin;
 					thin = result[0];
@@ -657,6 +663,7 @@ namespace
 				graphic->setEnabled(false);
 				graphic->setIndex();
 				danm->draw.append(graphic);
+                qDebug() << "append";
 				danm->lock.unlock();
 			}
 			danm->lock.lockForWrite();

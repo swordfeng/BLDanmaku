@@ -39,8 +39,9 @@ BLDanmaku::BLDanmaku(QQuickItem *parent):
     d.string = "test5";
     load.danmaku.append(d);
 
-    d.string = "test5";
+    d.string = "test6";
     load.danmaku.append(d);
+    /*
     d.string = "test5";
     load.danmaku.append(d);
     d.string = "test5";
@@ -51,7 +52,7 @@ BLDanmaku::BLDanmaku(QQuickItem *parent):
 
     d.string = "test5";
     load.danmaku.append(d);
-
+    */
     danmaku->appendToPool(&load);
     danmaku->setTime(0);
 
